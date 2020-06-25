@@ -20,6 +20,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//统一设置响应头
+app.use((req,res,next)=>{
+  res.setHeader('Access-Control-Allow-Origin','*');
+  next();
+});
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/account',accountRouter);

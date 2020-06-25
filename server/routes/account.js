@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const connection = require('./js/conn');
-router.get('/',(req,res)=>{
-    res.send('这是账号管理路由');
+router.post('/accountadd',(req,res)=>{
+    res.send('haha');
 });
 module.exports = router;

@@ -42,8 +42,10 @@
 </template>
 <style lang="less">
 @import "./accountadd";
+
 </style>
 <script>
+import {addAccount} from '@/api/account.js';
 export default {
   data() {
     // 密码验证
@@ -95,7 +97,10 @@ export default {
             password: this.accountAddForm.password,
             userType: this.accountAddForm.userType
           };
-          console.log(this.$http);
+          addAccount('account/accountadd',data)
+          .then(res=>{
+            console.log(res);
+          });
         } else {
           console.log("error");
           return false;

@@ -6,8 +6,8 @@
 import axios from 'axios';
 //引入qs
 import qs from 'qs';
-import { resolve, reject } from 'core-js/fn/promise';
-
+// 配置axios
+axios.defaults.baseURL='http://127.0.0.1:3001/'
 //导出
 export default {
     get(url,params={}){
