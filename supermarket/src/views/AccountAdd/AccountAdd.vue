@@ -95,8 +95,7 @@ export default {
             password: this.accountAddForm.password,
             userType: this.accountAddForm.userType
           };
-          alert('添加账号成功！');
-          this.$router.push('/home/accountmanage');
+          console.log(this.$http);
         } else {
           console.log("error");
           return false;
