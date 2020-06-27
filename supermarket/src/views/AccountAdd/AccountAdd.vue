@@ -42,10 +42,9 @@
 </template>
 <style lang="less">
 @import "./accountadd";
-
 </style>
 <script>
-import {addAccount} from '@/api/account.js';
+// import { addAccount } from "@/api/account.js";
 export default {
   data() {
     // 密码验证
@@ -88,6 +87,7 @@ export default {
     };
   },
   methods: {
+    // 提交
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         //通过
@@ -97,16 +97,37 @@ export default {
             password: this.accountAddForm.password,
             userType: this.accountAddForm.userType
           };
-          addAccount('account/accountadd',data)
-          .then(res=>{
-            console.log(res);
-          });
+          this.$http.post("account/accountadd", data)
+            .then(res => {
+              //获取响应数据
+              // console.log(res);
+              let { code, message } = res.data;
+              if (code === 0) {
+                // element 的成功消息提示
+                this.$message({
+                  message,
+                  type:'success'
+                });
+                // 跳转
+                this.$router.push('/home/accountmanage');
+                // console.log(code);
+                // alert(message);
+                return;
+              }
+              // 错误消息提示
+              this.$message.error(message);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+          // 前端验证不通过
         } else {
           console.log("error");
-          return false;
+          return;
         }
       });
     },
+    // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
     }
