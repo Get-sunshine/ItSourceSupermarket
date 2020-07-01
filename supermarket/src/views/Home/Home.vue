@@ -28,6 +28,7 @@ import LeftNav from '@/components/LeftNav/LeftNav.vue';
 import Top from '@/components/Top/Top.vue';
 import Bottom from '@/components/Bottom/Bottom.vue';
 export default {
+  // 组件
   components:{
     LeftNav,
     Top,

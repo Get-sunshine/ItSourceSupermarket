@@ -6,8 +6,17 @@
 import axios from 'axios';
 //引入qs
 import qs from 'qs';
+// localStor
+import localStor from '../utils/localStor';
 // 配置axios
-axios.defaults.baseURL='http://127.0.0.1:3001/'
+axios.defaults.baseURL='http://127.0.0.1:3001/';
+// axios请求拦截器
+axios.interceptors.request.use(config => {
+    // 获取token
+    const token = localStor.get('zsy_hy');
+    config.headers.Authorization = `Bearer ${token}`;
+    return config;
+})
 //导出
 export default {
     get(url,params={}){

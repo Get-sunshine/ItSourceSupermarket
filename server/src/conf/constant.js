@@ -10,6 +10,9 @@ MYSQL_CONFIG={
     password : '123456',
     database : 'supermarket'
 }
+// jwt secret 
+SECRET='zsy';
 module.exports={
-    MYSQL_CONFIG
+    MYSQL_CONFIG,
+    SECRET
 }

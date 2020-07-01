@@ -1,7 +1,35 @@
 const router = require('koa-router')();
 const conn = require('../db/conn');
+// jwt
+const { jwtSign } = require('../utils/jwt');
 // 前缀
 router.prefix('/account');
+// 登录
+router.post('/login', async (ctx, next) => {
+  // 获取参数
+  let { account, password } = ctx.request.body;
+  // sql语句
+  let sqlStr = `select * from account where account='${account}' and password='${password}';`;
+  // 执行查询
+  await conn.query(sqlStr).then((res) => {
+    if (res.length !== 0) {
+      // 生成token
+      const token = jwtSign(res[0]);
+      ctx.body = {
+        code: 0,
+        message: '登录成功',
+        token
+      }
+      return;
+    }
+    ctx.body = {
+      code: 1,
+      message: '登录失败，请检查用户名或密码'
+    }
+  }).catch((err) => {
+    console.log(err);
+  });
+});
 // 添加账号
 router.post('/accountadd', async (ctx, next) => {
   let { account, password, userType } = ctx.request.body;
@@ -46,8 +74,8 @@ router.get('/accountlist', async (ctx, nect) => {
         ctx.body = {
           code: 0,
           message: '查询成功',
-          result:{
-            data:res,
+          result: {
+            data: res,
             userTotal
           }
         };
@@ -146,5 +174,26 @@ router.post('/accountmultipledelete', async (ctx, next) => {
   }).catch((err) => {
     console.log(err);
   });
+});
+// 获取当前用户
+router.get('/currentaccount', async (ctx, next) => {
+  let { account } = ctx.state.user;
+  if (account) {
+    ctx.body = {
+      code: 0,
+      message: '用户已登录',
+      result: {
+        account
+      }
+    }
+    return;
+  }
+  ctx.body={
+    code:1,
+    message:'',
+    result:{
+
+    }
+  }
 });
 module.exports = router;
