@@ -106,7 +106,6 @@ export default {
               if (code === 0) {
                 // 保存token
                 localStor.save("zsy_hy", token);
-                console.log(localStor.get('zsy_hy'));
                 this.$message({
                   type: "success",
                   message
@@ -128,6 +127,7 @@ export default {
     //重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      console.log(this.echarts);
     }
   }
 };

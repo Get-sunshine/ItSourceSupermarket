@@ -11,17 +11,22 @@
       <el-col :span="4">
         <div class="grid-content bg-purple">
           <el-row>
+            <!-- 头像 -->
             <el-col :span="8">
-              <div class="avatar">
-                <img src="./avatar.jpg" alt />
+              <div class="demo-basic--circle">
+                <div class="block">
+                  <el-avatar :size="50" :src="accountInfo.imageUrl"></el-avatar>
+                </div>
               </div>
             </el-col>
             <el-col :span="16">
+              <!-- 下拉 -->
               <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link">
-                  {{account}}
+                  {{accountInfo.account}}
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
+                <!-- 下拉 -->
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="userCenter">个人中心</el-dropdown-item>
                   <el-dropdown-item command="logout">退出系统</el-dropdown-item>
@@ -35,43 +40,50 @@
   </div>
 </template>
 <script>
-import localStor from '@/utils/localStor.js';
+import localStor from "@/utils/localStor.js";
 export default {
   // 数据
-  data (){
-    return{
-      account:'',
-    }
+  data() {
+    return {
+      accountInfo: {
+        name:'',
+        imageUrl:''
+      },
+      // 头像地址
+    };
   },
-  methods:{
+  methods: {
+
     // 获取当前用户
-    getCurrentAccount(){
-      this.$http.get('account/currentaccount').then((res) => {
-        let {code,messsage,result} = res.data;
-        if(code===0){
-          this.account=result.account;
+    getCurrentAccount() {
+      this.$http.get("account/currentaccount").then(res => {
+        let { code, messsage, result } = res.data;
+        if (code === 0) {
+          let data = result.account;
+          this.accountInfo.account = data.account;
+          this.accountInfo.imageUrl='http://127.0.0.1:3001'+data.imageUrl;
           return;
         }
-        this.$message.error('遇到错误，请重新登录');
-        this.$router.push('/login');
+        this.$message.error("遇到错误，请重新登录");
+        this.$router.push("/login");
         return;
-      })
+      });
     },
     //退出系统
-    logout(){
-      localStor.remove('zsy_hy');
+    logout() {
+      localStor.remove("zsy_hy");
       this.$message({
-        type:'info',
-        message:'退出成功'
+        type: "info",
+        message: "退出成功"
       });
       setTimeout(() => {
-        this.$router.push('/login');
+        this.$router.push("/login");
       }, 1000);
     },
     // 个人中心、退出系统
-    handleCommand(command){
-      if(command==='userCenter'){
-        alert('还未开发');
+    handleCommand(command) {
+      if (command === "userCenter") {
+        this.$router.push("/home/personal");
         return;
       }
       this.logout();
@@ -79,7 +91,7 @@ export default {
     }
   },
   // 生命周期函数
-  created (){
+  created() {
     this.getCurrentAccount();
   }
 };

@@ -21,6 +21,10 @@ const routes = [
         path: '/home/systeminfo',
         component: () => import('../views/SystemInfo/SystemInfo.vue')
       },
+      {//个人中心
+      path: '/home/personal',
+        component: () => import('../views/Personal/Personal.vue')
+      },
       {//账号添加
         path: '/home/accountadd',
         component: () => import('../views/AccountAdd/AccountAdd.vue')

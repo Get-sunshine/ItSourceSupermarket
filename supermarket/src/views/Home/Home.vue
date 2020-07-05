@@ -9,9 +9,9 @@
       <!-- 右边 -->
       <el-container>
         <el-header>
-          <Top></Top>
+          <Top ref="Top"></Top>
         </el-header>
-        <el-main><router-view></router-view></el-main>
+        <el-main><router-view @refreshImageUrl='refreshImage'></router-view></el-main>
         <el-footer>
           <Bottom></Bottom>
         </el-footer>
@@ -33,6 +33,11 @@ export default {
     LeftNav,
     Top,
     Bottom
+  },
+  methods:{
+    refreshImage(){
+      this.$refs.Top.getCurrentAccount();
+    }
   }
 };
 </script>

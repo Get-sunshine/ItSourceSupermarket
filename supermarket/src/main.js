@@ -9,6 +9,10 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/base.css';
+// 引入echarts
+import echarts from 'echarts';
+// 挂载
+Vue.prototype.echarts = echarts;
 // localstorage
 import localStor from './utils/localStor'
 Vue.use(ElementUI);

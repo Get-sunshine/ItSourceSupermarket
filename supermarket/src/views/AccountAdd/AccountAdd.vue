@@ -110,8 +110,6 @@ export default {
                 });
                 // 跳转
                 this.$router.push('/home/accountmanage');
-                // console.log(code);
-                // alert(message);
                 return;
               }
               // 错误消息提示
